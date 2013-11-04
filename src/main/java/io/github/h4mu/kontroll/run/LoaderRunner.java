@@ -11,9 +11,15 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 @Configuration
 public class LoaderRunner {
 	public static void main(String[] args) {
+		String url = "http://www.bkk.hu/gtfs/budapest_gtfs.zip";
+		if (args.length < 1) {
+			System.out.println("Usage: LoaderRunner <url of GTFS zip>\nUsing \"" + url + "\" as default url.");
+		} else {
+			url = args[0];
+		}
 		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/applicationContext.xml")) {
 			Loader loader = context.getBean("dataLoader", Loader.class);
-			loader.load();
+			loader.load(url);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -21,6 +27,6 @@ public class LoaderRunner {
 	
 	@Bean
 	public Loader dataLoader() {
-		return new Loader("http://www.bkk.hu/gtfs/budapest_gtfs.zip", System.out);
+		return new Loader(System.out);
 	}
 }

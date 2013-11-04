@@ -20,14 +20,12 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 public class Loader {
-	private final String gtfsUrl;
 	private final PrintStream outputStream;
 	private HashMap<String, Integer> routes = new HashMap<>();
 	private HashMap<String, Integer> stops = new HashMap<>();
 	private HashMap<String, Integer> trips = new HashMap<>();
 
-	public Loader(String gtfsUrl, PrintStream outputStream) {
-		this.gtfsUrl = gtfsUrl;
+	public Loader(PrintStream outputStream) {
 		this.outputStream = outputStream;
 		
 	}
@@ -38,7 +36,7 @@ public class Loader {
 	}
 
 	@Transactional
-	public void load() throws IOException {
+	public void load(String gtfsUrl) throws IOException {
 		File file = File.createTempFile("kontroll", ".zip");
 		file.deleteOnExit();
 		write("Opened file " + file.getAbsolutePath());
