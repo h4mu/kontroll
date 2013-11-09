@@ -27,7 +27,6 @@ public class Loader {
 
 	public Loader(PrintStream outputStream) {
 		this.outputStream = outputStream;
-		
 	}
 	
 	private void write(String line) throws IOException {
