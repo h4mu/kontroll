@@ -4,6 +4,8 @@
 package io.github.h4mu.kontroll.domain;
 
 import io.github.h4mu.kontroll.domain.Route;
+import io.github.h4mu.kontroll.domain.Trip;
+import java.util.Set;
 
 privileged aspect Route_Roo_JavaBean {
     
@@ -13,6 +15,14 @@ privileged aspect Route_Roo_JavaBean {
     
     public void Route.setShortName(String shortName) {
         this.shortName = shortName;
+    }
+    
+    public Set<Trip> Route.getTrips() {
+        return this.trips;
+    }
+    
+    public void Route.setTrips(Set<Trip> trips) {
+        this.trips = trips;
     }
     
 }

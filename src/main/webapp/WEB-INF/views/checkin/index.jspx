@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:fn="http://java.sun.com/jsp/jstl/functions" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" xmlns:table="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <jsp:output omit-xml-declaration="yes"/>
+  <jsp:directive.page import="java.util.ArrayList" />
+  <div class="list-group">
+	  <c:forEach var="route" items="${routes}">
+	  	<c:url var="routeUrl" value="/checkin/route/${route.id}"/>
+	  	<a href="${routeUrl}" class="list-group-item">${route.shortName}</a>
+	  </c:forEach>
+  </div>
+</div>

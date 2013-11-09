@@ -1,5 +1,9 @@
-<div id="menu" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
-	<jsp:directive.page contentType="text/html;charset=UTF-8" />
-	<jsp:output omit-xml-declaration="yes"/>
-
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:menu="urn:jsptagdir:/WEB-INF/tags/menu" id="menu" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <menu:menu id="_menu" z="nZaf43BjUg1iM0v70HJVEsXDopc=">
+	    <menu:item id="i_controller__homeindex_id" messageCode="global_generic" url="/" z="user-managed"/>
+	    <menu:item id="i_controller__checkinindex_id" messageCode="global_generic" url="/checkin/index" z="CJchTmXGbZ0du20cn+tcFjslqls="/>
+    </menu:menu>
 </div>
