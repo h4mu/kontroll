@@ -2,6 +2,9 @@
 <div xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:spring="http://www.springframework.org/tags" xmlns:util="urn:jsptagdir:/WEB-INF/tags/util" version="2.0">
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <jsp:output omit-xml-declaration="yes"/>
-  <c:url var="actionUrl" value="/checkin/stop"/>
-  <form action="${actionUrl}" method="post" ></form>
+  <c:url var="actionUrl" value="/checkin"/>
+  <form action="${actionUrl}" method="post" >
+	  <input type="hidden" name="id" value="${stopTime}" />
+	  <input type="submit" />
+  </form>
 </div>

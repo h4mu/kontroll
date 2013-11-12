@@ -28,8 +28,8 @@ public class StopTime {
 
 	public static TypedQuery<StopTime> findStopTimesByTripIdOrderedBySequence(Trip trip) {
 		if (trip == null) throw new IllegalArgumentException("Needed Trip argument");
-		EntityManager entityManager = trip.entityManager();
-		TypedQuery<StopTime> q = entityManager.createQuery("SELECT o FROM StopTime AS o WHERE o.trip = :trip ORDER BY o.sequence", StopTime.class);
+		TypedQuery<StopTime> q = trip.entityManager.createQuery(
+				"SELECT o FROM StopTime AS o WHERE o.trip = :trip ORDER BY o.sequence", StopTime.class);
 		q.setParameter("trip", trip);
 		return q;
 	}
