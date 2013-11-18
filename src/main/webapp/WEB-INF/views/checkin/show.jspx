@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:field="urn:jsptagdir:/WEB-INF/tags/form/fields" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:page="urn:jsptagdir:/WEB-INF/tags/form" version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+    <page:show create="false" delete="false" id="ps_io_github_h4mu_kontroll_domain_Checkin" object="${checkin}" path="/checkin/list" update="false" z="k8RWs5XOa36cEZxYPsJPXkqIlf8=">
+        <field:display calendar="true" dateTimePattern="${checkin_spottingtime_date_format}" field="spottingTime" id="s_io_github_h4mu_kontroll_domain_Checkin_spottingTime" object="${checkin}" z="JiVc+nDM9FiTPCqBPJolyHvRRIg="/>
+        <field:display field="description" id="s_io_github_h4mu_kontroll_domain_Checkin_description" object="${checkin}" z="X209goiAyDlAUeOfgujSbwgAbkM="/>
+        <field:display field="stopTime" id="s_io_github_h4mu_kontroll_domain_Checkin_stopTime" object="${checkin}" z="nAE+gUoTyjHrvDbTitLqVDBUwVk="/>
+    </page:show>
+</div>

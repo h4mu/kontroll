@@ -13,4 +13,10 @@
     <definition extends="default" name="checkin/stop">
         <put-attribute name="body" value="/WEB-INF/views/checkin/stop.jspx"/>
     </definition>
+    <definition extends="default" name="checkin/list">
+        <put-attribute name="body" value="/WEB-INF/views/checkin/list.jspx"/>
+    </definition>
+    <definition extends="default" name="checkin/show">
+        <put-attribute name="body" value="/WEB-INF/views/checkin/show.jspx"/>
+    </definition>
 </tiles-definitions>

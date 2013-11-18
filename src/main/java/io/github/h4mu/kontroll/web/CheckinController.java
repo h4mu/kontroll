@@ -46,9 +46,16 @@ public class CheckinController {
 	@RequestMapping("{id}")
     public String show(@PathVariable Integer id, Model uiModel) {
     	uiModel.addAttribute("checkin", Checkin.findCheckin(id));
+        uiModel.addAttribute("itemId", id);
     	return "checkin/show";
     }
 
+	@RequestMapping("list")
+	public String list(Model uiModel) {
+		uiModel.addAttribute("checkins", Checkin.findAllCheckins());
+		return "checkin/list";
+	}
+	
     @RequestMapping("index")
     public String index(Model uiModel) {
     	uiModel.addAttribute("routes", Route.findAllRoutesOrderedByShortName().getResultList());
