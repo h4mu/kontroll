@@ -48,16 +48,6 @@ privileged aspect RouteIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void RouteIntegrationTest.testFindAllRoutes() {
-        Assert.assertNotNull("Data on demand for 'Route' failed to initialize correctly", dod.getRandomRoute());
-        long count = Route.countRoutes();
-        Assert.assertTrue("Too expensive to perform a find all test for 'Route', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Route> result = Route.findAllRoutes();
-        Assert.assertNotNull("Find all method for 'Route' illegally returned null", result);
-        Assert.assertTrue("Find all method for 'Route' failed to return any data", result.size() > 0);
-    }
-    
-    @Test
     public void RouteIntegrationTest.testFindRouteEntries() {
         Assert.assertNotNull("Data on demand for 'Route' failed to initialize correctly", dod.getRandomRoute());
         long count = Route.countRoutes();

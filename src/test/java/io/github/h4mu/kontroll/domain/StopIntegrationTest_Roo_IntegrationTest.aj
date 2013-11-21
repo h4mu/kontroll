@@ -48,16 +48,6 @@ privileged aspect StopIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void StopIntegrationTest.testFindAllStops() {
-        Assert.assertNotNull("Data on demand for 'Stop' failed to initialize correctly", dod.getRandomStop());
-        long count = Stop.countStops();
-        Assert.assertTrue("Too expensive to perform a find all test for 'Stop', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Stop> result = Stop.findAllStops();
-        Assert.assertNotNull("Find all method for 'Stop' illegally returned null", result);
-        Assert.assertTrue("Find all method for 'Stop' failed to return any data", result.size() > 0);
-    }
-    
-    @Test
     public void StopIntegrationTest.testFindStopEntries() {
         Assert.assertNotNull("Data on demand for 'Stop' failed to initialize correctly", dod.getRandomStop());
         long count = Stop.countStops();
@@ -116,18 +106,6 @@ privileged aspect StopIntegrationTest_Roo_IntegrationTest {
         }
         obj.flush();
         Assert.assertNotNull("Expected 'Stop' identifier to no longer be null", obj.getId());
-    }
-    
-    @Test
-    public void StopIntegrationTest.testRemove() {
-        Stop obj = dod.getRandomStop();
-        Assert.assertNotNull("Data on demand for 'Stop' failed to initialize correctly", obj);
-        Integer id = obj.getId();
-        Assert.assertNotNull("Data on demand for 'Stop' failed to provide an identifier", id);
-        obj = Stop.findStop(id);
-        obj.remove();
-        obj.flush();
-        Assert.assertNull("Failed to remove 'Stop' with identifier '" + id + "'", Stop.findStop(id));
     }
     
 }

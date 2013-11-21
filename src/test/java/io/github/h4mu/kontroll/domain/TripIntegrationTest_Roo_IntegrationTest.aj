@@ -48,16 +48,6 @@ privileged aspect TripIntegrationTest_Roo_IntegrationTest {
     }
     
     @Test
-    public void TripIntegrationTest.testFindAllTrips() {
-        Assert.assertNotNull("Data on demand for 'Trip' failed to initialize correctly", dod.getRandomTrip());
-        long count = Trip.countTrips();
-        Assert.assertTrue("Too expensive to perform a find all test for 'Trip', as there are " + count + " entries; set the findAllMaximum to exceed this value or set findAll=false on the integration test annotation to disable the test", count < 250);
-        List<Trip> result = Trip.findAllTrips();
-        Assert.assertNotNull("Find all method for 'Trip' illegally returned null", result);
-        Assert.assertTrue("Find all method for 'Trip' failed to return any data", result.size() > 0);
-    }
-    
-    @Test
     public void TripIntegrationTest.testFindTripEntries() {
         Assert.assertNotNull("Data on demand for 'Trip' failed to initialize correctly", dod.getRandomTrip());
         long count = Trip.countTrips();

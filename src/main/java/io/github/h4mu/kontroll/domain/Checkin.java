@@ -19,7 +19,7 @@ public class Checkin {
      */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(style = "M-")
+    @DateTimeFormat(style = "SM")
     private Calendar spottingTime;
 
     /**
