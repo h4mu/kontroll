@@ -3,9 +3,11 @@ package io.github.h4mu.kontroll.domain;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -36,14 +38,10 @@ public class Loader {
 
 	@Transactional
 	public void load(String gtfsUrl) throws IOException {
-		File file = File.createTempFile("kontroll", ".zip");
-		file.deleteOnExit();
-		write("Opened file " + file.getAbsolutePath());
-		Calendar lastMonth = Calendar.getInstance();
-		lastMonth.add(Calendar.MONTH, -1);
-		FileUtils.copyURLToFile(new URL(gtfsUrl), file);
-		write("Downloaded " + gtfsUrl);
+		File file = openGtfsFile(gtfsUrl);
+		
 		cleanDB();
+		
 		ZipInputStream stream = new ZipInputStream(new FileInputStream(file));
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -69,8 +67,33 @@ public class Loader {
 		}
 	}
 
+	private File openGtfsFile(String gtfsUrl) throws IOException, MalformedURLException {
+		if (gtfsUrl == null) {
+			throw new IllegalArgumentException("URL needed");
+		}
+		File file = new File("gtfs.zip");
+		boolean isNewFile = !file.exists();
+		if (isNewFile) {
+			try {
+				file.createNewFile();
+			} catch (SecurityException e) {
+				file = File.createTempFile("gtfs", ".zip");
+				file.deleteOnExit();
+			}
+		}
+		write("Opened file " + file.getAbsolutePath());
+		Calendar lastMonth = Calendar.getInstance();
+		lastMonth.add(Calendar.MONTH, -1);
+		if (isNewFile || FileUtils.isFileOlder(file, lastMonth.getTime())) {
+			FileUtils.copyURLToFile(new URL(gtfsUrl), file);
+			write("Downloaded " + gtfsUrl);
+		}
+		return file;
+	}
+
 	private void cleanDB() {
 		EntityManager entityManager = StopTime.entityManager();
+		entityManager.createQuery("DELETE FROM Checkin").executeUpdate();
 		entityManager.createQuery("DELETE FROM StopTime").executeUpdate();
 		entityManager.createQuery("DELETE FROM Trip").executeUpdate();
 		entityManager.createQuery("DELETE FROM Route").executeUpdate();
@@ -99,7 +122,7 @@ public class Loader {
 			String[] split = line.split(",");
 			// route_id,service_id,trip_id,trip_headsign,direction_id,block_id,shape_id,wheelchair_accessible,trips_bkk_ref
 			Integer routeId = routes.get(split[0]);
-			Route route = Route.findRoute(routeId);
+			Route route = routeId != null ? Route.findRoute(routeId) : null;
 			if (route != null) {
 				String tripKey = split[3] + ":" + split[4] + ":" + split[6] + ":" + routeId;
 				Trip trip = processedTrips.get(tripKey);
@@ -124,7 +147,7 @@ public class Loader {
 			// trip_id,arrival_time,departure_time,stop_id,stop_sequence,shape_dist_traveled
 			String[] split = line.split(",");
 			Integer tripId = trips.get(split[0]);
-			Trip trip = Trip.findTrip(tripId);
+			Trip trip = tripId != null ? Trip.findTrip(tripId) : null;
 			Integer stopId = stops.get(split[3]);
 			Stop stop = Stop.findStop(stopId);
 			if (trip != null && stop != null) {
@@ -163,16 +186,36 @@ public class Loader {
 	}
 
 	private void parseRoutes(BufferedReader reader) throws IOException {
+		HashSet<String> blacklist = getBlackList();
 		String line = reader.readLine(); // skip column names
 		while ((line = reader.readLine()) != null) {
 			String[] split = line.split(",");
 			// route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
-			Route route = new Route();
-			route.setShortName(split[2].replace("\"", "").trim());
-//			route.setLongName(split[3]);
-//			route.setDescription(split[4]);
-			route.persist();
-			routes.put(split[0], route.getId());
+			String shortName = split[2].replace("\"", "").trim();
+			if (!blacklist.contains(shortName)) {
+				Route route = new Route();
+				route.setShortName(shortName);
+//				route.setLongName(split[3]);
+//				route.setDescription(split[4]);
+				route.persist();
+				routes.put(split[0], route.getId());
+			}
 		}
+	}
+
+	private HashSet<String> getBlackList() {
+		File file = new File("blacklist.txt");
+		HashSet<String> blacklist = new HashSet<>();
+		if (file.exists() && file.canRead()) {
+			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					blacklist.add(line);
+				}
+			} catch (FileNotFoundException e) {
+			} catch (IOException e) {
+			}
+		}
+		return blacklist;
 	}
 }
