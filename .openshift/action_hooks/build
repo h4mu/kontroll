@@ -4,4 +4,4 @@
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
 
-mvn clean package -Popenshift -DskipTests -DskipITs
+mvn clean package -Popenshift -DskipTests -DskipITs -Dmaven.repo.local=${OPENSHIFT_DATA_DIR}maven
