@@ -5,6 +5,7 @@
 *.war
 *.ear
 *.zip
+*.pid
 /target
 /bin
 /maven

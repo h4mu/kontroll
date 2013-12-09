@@ -439,8 +439,6 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.4.v20120524</version>
                 <configuration>
-                   <stopPort>8081</stopPort>
-                   <stopKey>kontroll</stopKey>
                    <connectors>
                        <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
         			   	   <port>${jetty.port}</port>
