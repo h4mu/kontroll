@@ -46,3 +46,6 @@ backup
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-11-26 21:08:46
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-04 22:46:31
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-04 22:51:51
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-15 21:41:53
+persistence setup --database POSTGRES --provider HIBERNATE --databaseName kontroll --userName kontroll --password o0j650pp
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-15 22:39:02

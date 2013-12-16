@@ -3,3 +3,14 @@
 # build hook has been run but before the application has been started back
 # up again.  This script gets executed directly, so it could be python, php,
 # ruby, etc.
+
+# DB Initialization
+if [ ! -f ~/.pgpass ]
+then
+	echo $OPENSHIFT_POSTGRESQL_DB_HOST:$OPENSHIFT_POSTGRESQL_DB_PORT:kontroll:$OPENSHIFT_POSTGRESQL_DB_USERNAME:$OPENSHIFT_POSTGRESQL_DB_PASSWORD > ~/.pgpass
+	chmod 0600 ~/.pgpass
+	psql -h $OPENSHIFT_POSTGRESQL_DB_HOST -p $OPENSHIFT_POSTGRESQL_DB_PORT -U $OPENSHIFT_POSTGRESQL_DB_USERNAME -c \
+		"DROP OWNED BY $database_username;DROP ROLE IF EXISTS $database_username;CREATE USER $database_username NOSUPERUSER NOCREATEDB NOCREATEROLE PASSWORD '$database_password';GRANT ALL PRIVILEGES ON DATABASE kontroll TO $database_username;" kontroll
+	cd ${OPENSHIFT_REPO_DIR}
+	sh ./LoaderRunner.sh $gtfs_url >${OPENSHIFT_DIY_LOG_DIR}/jetty.log 2>&1
+fi

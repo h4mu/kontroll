@@ -6,6 +6,7 @@
 *.ear
 *.zip
 *.pid
+*.log
 /target
 /bin
 /maven
