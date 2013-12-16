@@ -13,5 +13,5 @@ then
 	psql -h $OPENSHIFT_POSTGRESQL_DB_HOST -p $OPENSHIFT_POSTGRESQL_DB_PORT -U $OPENSHIFT_POSTGRESQL_DB_USERNAME -c \
 		"DROP ROLE IF EXISTS $database_username;CREATE USER $database_username NOSUPERUSER NOCREATEDB NOCREATEROLE PASSWORD '$database_password';GRANT ALL PRIVILEGES ON DATABASE kontroll TO $database_username;" kontroll
 	cd ${OPENSHIFT_REPO_DIR}
-	sh ./LoaderRunner.sh $gtfs_url >${OPENSHIFT_DIY_LOG_DIR}/jetty.log 2>&1
+	sh ./LoaderRunner.sh $gtfs_url >${OPENSHIFT_DIY_LOG_DIR}/jetty.log 2>&1 &
 fi
