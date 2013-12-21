@@ -24,13 +24,31 @@ privileged aspect RouteDataOnDemand_Roo_DataOnDemand {
     
     public Route RouteDataOnDemand.getNewTransientRoute(int index) {
         Route obj = new Route();
+        setColor(obj, index);
         setShortName(obj, index);
+        setTextColor(obj, index);
         return obj;
+    }
+    
+    public void RouteDataOnDemand.setColor(Route obj, int index) {
+        String color = "colo_" + index;
+        if (color.length() > 6) {
+            color = color.substring(0, 6);
+        }
+        obj.setColor(color);
     }
     
     public void RouteDataOnDemand.setShortName(Route obj, int index) {
         String shortName = "shortName_" + index;
         obj.setShortName(shortName);
+    }
+    
+    public void RouteDataOnDemand.setTextColor(Route obj, int index) {
+        String textColor = "text_" + index;
+        if (textColor.length() > 6) {
+            textColor = textColor.substring(0, 6);
+        }
+        obj.setTextColor(textColor);
     }
     
     public Route RouteDataOnDemand.getSpecificRoute(int index) {

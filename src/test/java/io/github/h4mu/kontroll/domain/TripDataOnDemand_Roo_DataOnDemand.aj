@@ -8,6 +8,9 @@ import io.github.h4mu.kontroll.domain.Trip;
 import io.github.h4mu.kontroll.domain.TripDataOnDemand;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -29,9 +32,16 @@ privileged aspect TripDataOnDemand_Roo_DataOnDemand {
     
     public Trip TripDataOnDemand.getNewTransientTrip(int index) {
         Trip obj = new Trip();
+        setEndTime(obj, index);
         setHeadSign(obj, index);
         setIsReturn(obj, index);
+        setStartTime(obj, index);
         return obj;
+    }
+    
+    public void TripDataOnDemand.setEndTime(Trip obj, int index) {
+        Date endTime = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setEndTime(endTime);
     }
     
     public void TripDataOnDemand.setHeadSign(Trip obj, int index) {
@@ -42,6 +52,11 @@ privileged aspect TripDataOnDemand_Roo_DataOnDemand {
     public void TripDataOnDemand.setIsReturn(Trip obj, int index) {
         Boolean isReturn = Boolean.TRUE;
         obj.setIsReturn(isReturn);
+    }
+    
+    public void TripDataOnDemand.setStartTime(Trip obj, int index) {
+        Date startTime = new GregorianCalendar(Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH), Calendar.getInstance().get(Calendar.HOUR_OF_DAY), Calendar.getInstance().get(Calendar.MINUTE), Calendar.getInstance().get(Calendar.SECOND) + new Double(Math.random() * 1000).intValue()).getTime();
+        obj.setStartTime(startTime);
     }
     
     public Trip TripDataOnDemand.getSpecificTrip(int index) {

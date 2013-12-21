@@ -6,6 +6,7 @@ package io.github.h4mu.kontroll.domain;
 import io.github.h4mu.kontroll.domain.Route;
 import io.github.h4mu.kontroll.domain.StopTime;
 import io.github.h4mu.kontroll.domain.Trip;
+import java.util.Date;
 import java.util.Set;
 
 privileged aspect Trip_Roo_JavaBean {
@@ -40,6 +41,22 @@ privileged aspect Trip_Roo_JavaBean {
     
     public void Trip.setStopTimes(Set<StopTime> stopTimes) {
         this.stopTimes = stopTimes;
+    }
+    
+    public Date Trip.getStartTime() {
+        return this.startTime;
+    }
+    
+    public void Trip.setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+    
+    public Date Trip.getEndTime() {
+        return this.endTime;
+    }
+    
+    public void Trip.setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
     
 }

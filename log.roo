@@ -49,3 +49,31 @@ backup
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-15 21:41:53
 persistence setup --database POSTGRES --provider HIBERNATE --databaseName kontroll --userName kontroll --password o0j650pp
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-15 22:39:02
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-17 20:29:11
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-17 23:18:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-18 23:07:10
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-18 23:32:01
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-19 20:08:17
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --regexp \p{XDigit}{0,6}
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --regexp \p{XDigit}{0,6}
+focus --class ~.domain.Route 
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --regexp [0-9a-fA-F]*
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --regexp "[0-9a-fA-F]*"
+// [failed] field string --class ~.domain.Route --fieldName color --sizeMax 6 --sizeMin 0
+// [failed] field string --fieldName color --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+// [failed] field string --fieldName color
+// [failed] field string --fieldName textColor --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-19 21:19:56
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-19 21:22:35
+focus --class ~.domain.Route 
+field string --fieldName color --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+field string --fieldName textColor --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+focus --class ~.domain.Trip
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-20 00:05:21
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-20 18:29:41
+focus --class ~.domain.Trip
+// [failed] field date --fieldName from --type java.util.Date --persistenceType JPA_TIME --dateTimeFormatPattern hh:mm:ss
+field date --fieldName startTime --type java.util.Date --persistenceType JPA_TIME --dateTimeFormatPattern hh:mm:ss
+field date --fieldName endTime --type java.util.Date --persistenceType JPA_TIME --dateTimeFormatPattern hh:mm:ss
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-20 22:04:13

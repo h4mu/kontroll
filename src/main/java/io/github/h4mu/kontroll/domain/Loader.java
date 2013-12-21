@@ -9,10 +9,15 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -118,23 +123,31 @@ public class Loader {
 	private void parseTrips(BufferedReader reader) throws IOException {
 		String line = reader.readLine(); // skip column names
 		HashMap<String, Trip> processedTrips = new HashMap<>();
+		// route_id,service_id,trip_id,trip_headsign,direction_id,block_id,shape_id,wheelchair_accessible,trips_bkk_ref
+		Pattern pattern = Pattern.compile("^([^,]+),[^,]*,([^,]+),(?:\"([^\"]+)\"|([^,]+)),(0|1),[^,]*,([^,]+),.*");
 		while ((line = reader.readLine()) != null) {
-			String[] split = line.split(",");
-			// route_id,service_id,trip_id,trip_headsign,direction_id,block_id,shape_id,wheelchair_accessible,trips_bkk_ref
-			Integer routeId = routes.get(split[0]);
+			Matcher matcher = pattern.matcher(line);
+			if (!matcher.matches()) {
+				write(line);
+				break;
+			}
+			Integer routeId = routes.get(matcher.group(1));
 			Route route = routeId != null ? Route.findRoute(routeId) : null;
 			if (route != null) {
-				String tripKey = split[3] + ":" + split[4] + ":" + split[6] + ":" + routeId;
+				String direction = matcher.group(5);
+				String quotedHeadsign = matcher.group(3);
+				String headSign = quotedHeadsign != null ? quotedHeadsign : matcher.group(4);
+				String tripKey = headSign + ":" + direction + ":" + matcher.group(6) + ":" + routeId;
 				Trip trip = processedTrips.get(tripKey);
 				if (trip == null) {
 					trip = new Trip();
-					trip.setHeadSign(split[3].replace("\"", "").trim());
-					trip.setIsReturn("1".equals(split[4].replace("\"", "").trim()));
+					trip.setHeadSign(headSign);
+					trip.setIsReturn("1".equals(direction));
 					trip.setRoute(route);
 					processedTrips.put(tripKey, trip);
 					trip.persist();
 				}
-				trips.put(split[2], trip.getId());
+				trips.put(matcher.group(2), trip.getId());
 			}
 		}
 	}
@@ -142,6 +155,7 @@ public class Loader {
 	private void parseStopTimes(BufferedReader reader)
 			throws IOException {
 		HashSet<String> processedStopTimes = new HashSet<>();
+		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		String line = reader.readLine(); // skip column names
 		while ((line = reader.readLine()) != null) {
 			// trip_id,arrival_time,departure_time,stop_id,stop_sequence,shape_dist_traveled
@@ -151,6 +165,26 @@ public class Loader {
 			Integer stopId = stops.get(split[3]);
 			Stop stop = Stop.findStop(stopId);
 			if (trip != null && stop != null) {
+				try {
+					Date arrival = format.parse(split[1].replace("\"", ""));
+					Date startTime = trip.getStartTime();
+					if (startTime == null || arrival.before(startTime)) {
+						trip.setStartTime(arrival);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					write(e + ": " + e.getMessage());
+				}
+				try {
+					Date departure = format.parse(split[2].replace("\"", ""));
+					Date endTime = trip.getEndTime();
+					if (endTime == null || departure.after(endTime)) {
+						trip.setEndTime(departure);
+					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					write(e + ": " + e.getMessage());
+				}
 				String stopTimeKey = split[3] + ":" + tripId + ":" + stopId;
 				if (!processedStopTimes.contains(stopTimeKey)) {
 					StopTime stopTime = new StopTime();
@@ -187,18 +221,24 @@ public class Loader {
 
 	private void parseRoutes(BufferedReader reader) throws IOException {
 		HashSet<String> blacklist = getBlackList();
+		// route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
+		Pattern pattern = Pattern.compile("^([^,]+),[^,]*,(?:\"([^\"]+)\"|([^,]+)),(?:\"[^\"]*\"|[^,]*),(?:\"[^\"]*\"|[^,]*),[^,]*,([0-9a-fA-F]{6}),([0-9a-fA-F]{6})");
 		String line = reader.readLine(); // skip column names
 		while ((line = reader.readLine()) != null) {
-			String[] split = line.split(",");
-			// route_id,agency_id,route_short_name,route_long_name,route_desc,route_type,route_color,route_text_color
-			String shortName = split[2].replace("\"", "").trim();
+			Matcher matcher = pattern.matcher(line);
+			if (!matcher.matches()) {
+				write(line);
+				break;
+			}
+			String unquotedShortName = matcher.group(3);
+			String shortName = unquotedShortName != null ? unquotedShortName : matcher.group(2);
 			if (!blacklist.contains(shortName)) {
 				Route route = new Route();
 				route.setShortName(shortName);
-//				route.setLongName(split[3]);
-//				route.setDescription(split[4]);
+				route.setColor(matcher.group(5));
+				route.setTextColor(matcher.group(4));
 				route.persist();
-				routes.put(split[0], route.getId());
+				routes.put(matcher.group(1), route.getId());
 			}
 		}
 	}

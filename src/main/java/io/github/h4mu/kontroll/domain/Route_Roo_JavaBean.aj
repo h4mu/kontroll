@@ -25,4 +25,20 @@ privileged aspect Route_Roo_JavaBean {
         this.trips = trips;
     }
     
+    public String Route.getColor() {
+        return this.color;
+    }
+    
+    public void Route.setColor(String color) {
+        this.color = color;
+    }
+    
+    public String Route.getTextColor() {
+        return this.textColor;
+    }
+    
+    public void Route.setTextColor(String textColor) {
+        this.textColor = textColor;
+    }
+    
 }
