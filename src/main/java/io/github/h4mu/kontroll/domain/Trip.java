@@ -2,15 +2,22 @@ package io.github.h4mu.kontroll.domain;
 import org.springframework.roo.addon.javabean.RooJavaBean;
 import org.springframework.roo.addon.jpa.activerecord.RooJpaActiveRecord;
 import org.springframework.roo.addon.tostring.RooToString;
+
 import javax.persistence.ManyToOne;
+
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.TypedQuery;
+
 import java.util.Date;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
@@ -38,8 +45,14 @@ public class Trip {
 
     public static TypedQuery<Trip> findTripsByRouteIdOrderedByHeadSign(Route route) {
         if (route == null) throw new IllegalArgumentException("Wrong route parameter");
-        TypedQuery<Trip> query = route.entityManager.createQuery("SELECT o FROM Trip AS o WHERE o.route = :route ORDER BY o.headSign", Trip.class);
+		Calendar epoch = Calendar.getInstance();
+		epoch.setTimeInMillis(0);
+		Calendar timeNow = Calendar.getInstance();
+		timeNow.set(Calendar.YEAR, epoch.get(Calendar.YEAR));
+		timeNow.set(Calendar.DAY_OF_YEAR, epoch.get(Calendar.DAY_OF_YEAR));
+        TypedQuery<Trip> query = route.entityManager.createQuery("SELECT o FROM Trip AS o WHERE o.route = :route AND :timeNow BETWEEN o.startTime AND o.endTime ORDER BY o.headSign", Trip.class);
         query.setParameter("route", route);
+        query.setParameter("timeNow", timeNow.getTime());
         return query;
     }
 
