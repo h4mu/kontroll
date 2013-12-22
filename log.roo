@@ -77,3 +77,4 @@ focus --class ~.domain.Trip
 field date --fieldName startTime --type java.util.Date --persistenceType JPA_TIME --dateTimeFormatPattern hh:mm:ss
 field date --fieldName endTime --type java.util.Date --persistenceType JPA_TIME --dateTimeFormatPattern hh:mm:ss
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-20 22:04:13
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-22 22:09:32

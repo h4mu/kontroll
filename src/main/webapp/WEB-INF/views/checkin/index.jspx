@@ -3,10 +3,10 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <jsp:output omit-xml-declaration="yes"/>
   <jsp:directive.page import="java.util.ArrayList" />
-  <div class="list-group">
+  <div class="routes">
 	  <c:forEach var="route" items="${routes}">
 	  	<c:url var="routeUrl" value="/checkin/route/${route.id}"/>
-	  	<a href="${routeUrl}" class="list-group-item">${route.shortName}</a>
+	  	<a href="${routeUrl}" style="color: #${route.textColor}; background-color: #${route.color};" class="route">${route.shortName}</a>
 	  </c:forEach>
   </div>
 </div>

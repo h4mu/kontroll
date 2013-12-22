@@ -3,10 +3,10 @@
   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
   <jsp:output omit-xml-declaration="yes"/>
   <jsp:directive.page import="java.util.ArrayList" />
-  <div class="list-group">
+  <ul class="trips">
 	  <c:forEach var="trip" items="${trips}">
 	  	<c:url var="tripUrl" value="/checkin/trip/${trip.id}"/>
-	  	<a href="${tripUrl}" class="list-group-item">${trip.headSign}</a>
+	  	<li><a href="${tripUrl}" class="trip">${trip.headSign}</a></li>
 	  </c:forEach>
-  </div>
+  </ul>
 </div>
