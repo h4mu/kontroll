@@ -1,4 +1,6 @@
 package io.github.h4mu.kontroll.domain;
+import java.util.List;
+
 import javax.persistence.ManyToOne;
 import javax.persistence.TypedQuery;
 
@@ -25,11 +27,11 @@ public class StopTime {
     @ManyToOne
     private Stop stop;
 
-	public static TypedQuery<StopTime> findStopTimesByTripIdOrderedBySequence(Trip trip) {
+	public static List<StopTime> findStopTimesByTripIdOrderedBySequence(Trip trip) {
 		if (trip == null) throw new IllegalArgumentException("Needed Trip argument");
-		TypedQuery<StopTime> q = trip.entityManager.createQuery(
+		TypedQuery<StopTime> query = trip.entityManager.createQuery(
 				"SELECT o FROM StopTime AS o WHERE o.trip = :trip ORDER BY o.sequence", StopTime.class);
-		q.setParameter("trip", trip);
-		return q;
+		query.setParameter("trip", trip);
+		return query.getResultList();
 	}
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 <tiles-definitions>
-    <definition extends="default" name="checkin/index">
-        <put-attribute name="body" value="/WEB-INF/views/checkin/index.jspx"/>
+    <definition extends="default" name="checkin/routes">
+        <put-attribute name="body" value="/WEB-INF/views/checkin/routes.jspx"/>
     </definition>
     <definition extends="default" name="checkin/route">
         <put-attribute name="body" value="/WEB-INF/views/checkin/route.jspx"/>
@@ -15,8 +15,5 @@
     </definition>
     <definition extends="default" name="checkin/list">
         <put-attribute name="body" value="/WEB-INF/views/checkin/list.jspx"/>
-    </definition>
-    <definition extends="default" name="checkin/show">
-        <put-attribute name="body" value="/WEB-INF/views/checkin/show.jspx"/>
     </definition>
 </tiles-definitions>

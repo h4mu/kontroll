@@ -5,6 +5,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class Route {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "route")
     private Set<Trip> trips = new HashSet<Trip>();
 
-    public static TypedQuery<Route> findAllRoutesOrderedByShortName() {
+    public static List<Route> findAllRoutesOrderedByShortName() {
         EntityManager entityManager = entityManager();
 		Calendar epoch = Calendar.getInstance();
 		epoch.setTimeInMillis(0);
@@ -37,7 +38,7 @@ public class Route {
 		timeNow.set(Calendar.DAY_OF_YEAR, epoch.get(Calendar.DAY_OF_YEAR));
         TypedQuery<Route> query = entityManager.createQuery("SELECT DISTINCT o FROM Trip t INNER JOIN t.route o WHERE :timeNow BETWEEN t.startTime AND t.endTime ORDER BY o.color, o.textColor, o.shortName", Route.class);
         query.setParameter("timeNow", timeNow.getTime());
-        return query;
+        return query.getResultList();
     }
 
     /**

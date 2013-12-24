@@ -7,6 +7,7 @@ import javax.persistence.ManyToOne;
 
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,7 +44,7 @@ public class Trip {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "trip")
     private Set<StopTime> stopTimes = new HashSet<StopTime>();
 
-    public static TypedQuery<Trip> findTripsByRouteIdOrderedByHeadSign(Route route) {
+    public static List<Trip> findTripsByRouteIdOrderedByHeadSign(Route route) {
         if (route == null) throw new IllegalArgumentException("Wrong route parameter");
 		Calendar epoch = Calendar.getInstance();
 		epoch.setTimeInMillis(0);
@@ -53,7 +54,7 @@ public class Trip {
         TypedQuery<Trip> query = route.entityManager.createQuery("SELECT o FROM Trip AS o WHERE o.route = :route AND :timeNow BETWEEN o.startTime AND o.endTime ORDER BY o.headSign", Trip.class);
         query.setParameter("route", route);
         query.setParameter("timeNow", timeNow.getTime());
-        return query;
+        return query.getResultList();
     }
 
     /**

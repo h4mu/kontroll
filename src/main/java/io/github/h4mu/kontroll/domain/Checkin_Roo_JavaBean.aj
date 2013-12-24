@@ -17,14 +17,6 @@ privileged aspect Checkin_Roo_JavaBean {
         this.spottingTime = spottingTime;
     }
     
-    public String Checkin.getDescription() {
-        return this.description;
-    }
-    
-    public void Checkin.setDescription(String description) {
-        this.description = description;
-    }
-    
     public StopTime Checkin.getStopTime() {
         return this.stopTime;
     }
