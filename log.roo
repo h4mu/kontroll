@@ -89,3 +89,5 @@ field date --fieldName endTime --type java.util.Date --persistenceType JPA_TIME 
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-24 14:40:06
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-24 15:16:21
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-24 15:18:43
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2013-12-24 16:06:17
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2013-12-25 20:46:27

@@ -27,7 +27,8 @@
 		            </spring:escapeBody>
 		  		</td>
 	  			<c:set var="route" value="${checkin.stopTime.trip.route}" />
-		  		<td style="color: #${route.textColor}; background-color: #${route.color};">
+	  			<c:set var="hash" value="#" />
+		  		<td style="color: ${hash}${route.textColor}; background-color: ${hash}${route.color};">
 	  				<c:out value="${route.shortName}" />
 		  		</td>
 		  		<td>

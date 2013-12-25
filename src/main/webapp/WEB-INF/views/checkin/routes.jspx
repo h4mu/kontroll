@@ -6,7 +6,8 @@
   <div class="routes">
 	  <c:forEach var="route" items="${routes}">
 	  	<c:url var="routeUrl" value="/checkin/route/${route.id}"/>
-	  	<a href="${routeUrl}" style="color: #${route.textColor}; background-color: #${route.color};" class="route">${route.shortName}</a>
+	  	<c:set var="hash" value="#" />
+	  	<a href="${routeUrl}" style="color: ${hash}${route.textColor}; background-color: ${hash}${route.color};" class="route">${route.shortName}</a>
 	  </c:forEach>
   </div>
 </div>
