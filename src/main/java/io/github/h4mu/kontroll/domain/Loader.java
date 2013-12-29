@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -129,7 +130,7 @@ public class Loader {
 			Matcher matcher = pattern.matcher(line);
 			if (!matcher.matches()) {
 				write(line);
-				break;
+				continue;
 			}
 			Integer routeId = routes.get(matcher.group(1));
 			Route route = routeId != null ? Route.findRoute(routeId) : null;
@@ -160,6 +161,10 @@ public class Loader {
 		while ((line = reader.readLine()) != null) {
 			// trip_id,arrival_time,departure_time,stop_id,stop_sequence,shape_dist_traveled
 			String[] split = line.split(",");
+			if (split.length < 6) {
+				write(line);
+				continue;
+			}
 			Integer tripId = trips.get(split[0]);
 			Trip trip = tripId != null ? Trip.findTrip(tripId) : null;
 			Integer stopId = stops.get(split[3]);
@@ -172,8 +177,8 @@ public class Loader {
 						trip.setStartTime(arrival);
 					}
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					write(e + ": " + e.getMessage());
+					write(line);
+					continue;
 				}
 				try {
 					Date departure = format.parse(split[2].replace("\"", ""));
@@ -182,8 +187,8 @@ public class Loader {
 						trip.setEndTime(departure);
 					}
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					write(e + ": " + e.getMessage());
+					write(line);
+					continue;
 				}
 				String stopTimeKey = split[3] + ":" + tripId + ":" + stopId;
 				if (!processedStopTimes.contains(stopTimeKey)) {
@@ -204,18 +209,20 @@ public class Loader {
 		while ((line = reader.readLine()) != null) {
 			// stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,wheelchair_boarding
 			StringTokenizer tokenizer = new StringTokenizer(line, ",");
-			String id = tokenizer.nextToken();
-			String name = tokenizer.nextToken().replace("\"", "").trim();
-			Stop stop = processedStops.get(name);
-			if (stop == null) {
-				stop = new Stop();
-				stop.setName(name);
-				processedStops.put(name, stop);
-				stop.persist();
+			try {
+				String id = tokenizer.nextToken();
+				String name = tokenizer.nextToken().replace("\"", "").trim();
+				Stop stop = processedStops.get(name);
+				if (stop == null) {
+					stop = new Stop();
+					stop.setName(name);
+					processedStops.put(name, stop);
+					stop.persist();
+				}
+				stops.put(id, stop.getId());
+			} catch (NoSuchElementException e) {
+				write(line);
 			}
-			stops.put(id, stop.getId());
-			// tokenizer.nextToken(); // stop_lat
-			// tokenizer.nextToken(); // stop_lon
 		}
 	}
 
@@ -228,7 +235,7 @@ public class Loader {
 			Matcher matcher = pattern.matcher(line);
 			if (!matcher.matches()) {
 				write(line);
-				break;
+				continue;
 			}
 			String unquotedShortName = matcher.group(3);
 			String shortName = unquotedShortName != null ? unquotedShortName : matcher.group(2);
