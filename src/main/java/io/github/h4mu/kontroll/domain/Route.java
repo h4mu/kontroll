@@ -36,7 +36,7 @@ public class Route {
         TypedQuery<Route> query = entityManager.createQuery("SELECT DISTINCT o FROM Trip t INNER JOIN t.route o "
 			+ "WHERE :timeNow BETWEEN t.startTime AND t.endTime " 
 	        + "OR (t.startTime > t.endTime AND " 
-			+ "(:timeNow <= t.startTime OR :timeNow >= t.endTime)) " 
+			+ "(:timeNow >= t.startTime OR :timeNow <= t.endTime)) " 
 	        + "ORDER BY o.color, o.textColor, o.shortName", Route.class);
 		Calendar timeNow = Calendar.getInstance();
 		timeNow.set(Calendar.YEAR, epoch.get(Calendar.YEAR));

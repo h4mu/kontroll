@@ -54,7 +54,7 @@ public class Trip {
         TypedQuery<Trip> query = route.entityManager.createQuery("SELECT t FROM Trip AS t WHERE t.route = :route " 
 			+ "AND (:timeNow BETWEEN t.startTime AND t.endTime " 
 	        + "OR (t.startTime > t.endTime AND " 
-			+ "(:timeNow <= t.startTime OR :timeNow >= t.endTime))) " 
+			+ "(:timeNow >= t.startTime OR :timeNow <= t.endTime))) " 
     		+ "ORDER BY t.headSign", Trip.class);
         query.setParameter("route", route);
         query.setParameter("timeNow", timeNow.getTime());
