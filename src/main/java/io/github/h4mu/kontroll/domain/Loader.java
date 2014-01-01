@@ -254,10 +254,15 @@ public class Loader {
 		File file = new File("blacklist.txt");
 		HashSet<String> blacklist = new HashSet<>();
 		if (file.exists() && file.canRead()) {
-			try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
-				String line;
-				while ((line = reader.readLine()) != null) {
-					blacklist.add(line);
+			try {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+				try {
+					String line;
+					while ((line = reader.readLine()) != null) {
+						blacklist.add(line);
+					}
+				} finally {
+					reader.close();
 				}
 			} catch (FileNotFoundException e) {
 			} catch (IOException e) {

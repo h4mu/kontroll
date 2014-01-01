@@ -45,9 +45,10 @@ public class FrontDoorCheckParser {
 		XPath path = XPathFactory.newInstance().newXPath();
 		File file = new File("blacklist.txt");
 		System.out.println(file.getAbsolutePath());
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		try {
 			write(writer, "M1");
-//			write(writer, "M2");
+			write(writer, "M2");
 			write(writer, "M3");
 			for (int i = 0; i < 3; i++) {
 				XPathExpression expression = path.compile("//*[@id=\"mw-content-text\"]/p[" + (6 + i) + "]/a");
@@ -56,6 +57,8 @@ public class FrontDoorCheckParser {
 					write(writer, nl.item(j).getTextContent());
 				}
 			}
+		} finally {
+			writer.close();
 		}
 	}
 

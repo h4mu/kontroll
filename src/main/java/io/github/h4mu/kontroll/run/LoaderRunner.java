@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 @Configuration
 public class LoaderRunner {
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 		String url = "http://www.bkk.hu/gtfs/budapest_gtfs.zip";
 		if (args.length < 1) {
@@ -17,8 +18,8 @@ public class LoaderRunner {
 		} else {
 			url = args[0];
 		}
-		try(ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("META-INF/spring/applicationContext.xml")) {
-			Loader loader = context.getBean("dataLoader", Loader.class);
+		try {
+			Loader loader = new ClassPathXmlApplicationContext("META-INF/spring/applicationContext.xml").getBean("dataLoader", Loader.class);
 			loader.load(url);
 		} catch (IOException e) {
 			e.printStackTrace();
