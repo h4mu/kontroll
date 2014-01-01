@@ -3,7 +3,7 @@
 
 package io.github.h4mu.kontroll.domain;
 
-import io.github.h4mu.kontroll.domain.RouteDataOnDemand;
+import io.github.h4mu.kontroll.domain.Route;
 import io.github.h4mu.kontroll.domain.Trip;
 import io.github.h4mu.kontroll.domain.TripDataOnDemand;
 import java.security.SecureRandom;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Random;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 privileged aspect TripDataOnDemand_Roo_DataOnDemand {
@@ -27,14 +26,12 @@ privileged aspect TripDataOnDemand_Roo_DataOnDemand {
     
     private List<Trip> TripDataOnDemand.data;
     
-    @Autowired
-    RouteDataOnDemand TripDataOnDemand.routeDataOnDemand;
-    
     public Trip TripDataOnDemand.getNewTransientTrip(int index) {
         Trip obj = new Trip();
         setEndTime(obj, index);
         setHeadSign(obj, index);
         setIsReturn(obj, index);
+        setRoute(obj, index);
         setStartTime(obj, index);
         return obj;
     }
@@ -52,6 +49,11 @@ privileged aspect TripDataOnDemand_Roo_DataOnDemand {
     public void TripDataOnDemand.setIsReturn(Trip obj, int index) {
         Boolean isReturn = Boolean.TRUE;
         obj.setIsReturn(isReturn);
+    }
+    
+    public void TripDataOnDemand.setRoute(Trip obj, int index) {
+        Route route = null;
+        obj.setRoute(route);
     }
     
     public void TripDataOnDemand.setStartTime(Trip obj, int index) {
