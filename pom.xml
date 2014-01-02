@@ -471,6 +471,9 @@
 	<profiles>
 		<profile>
 	      <id>standalone</id>
+	      <activation>
+	      	<jdk>1.7</jdk>
+	      </activation>
 	      <build>
 	      	<plugins>
 				<plugin>
