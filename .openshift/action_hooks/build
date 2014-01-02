@@ -5,4 +5,4 @@
 # could be python, php, ruby, etc.
 
 cd ${OPENSHIFT_REPO_DIR}
-mvn clean package -DskipTests -DskipITs -Dmaven.repo.local=${OPENSHIFT_DATA_DIR}maven
+mvn clean package -P standalone -DskipTests -DskipITs -Dmaven.repo.local=${OPENSHIFT_DATA_DIR}maven

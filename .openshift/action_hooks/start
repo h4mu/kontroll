@@ -3,5 +3,5 @@
 # script. The application will work only if it binds to
 # $OPENSHIFT_INTERNAL_IP:8080
 cd ${OPENSHIFT_REPO_DIR}
-nohup mvn --quiet -Dmaven.repo.local=${OPENSHIFT_DATA_DIR}maven -Djetty.host=$OPENSHIFT_DIY_IP -Djetty.port=$OPENSHIFT_DIY_PORT org.mortbay.jetty:jetty-maven-plugin:start >${OPENSHIFT_DIY_LOG_DIR}/jetty.log 2>&1 &
+nohup mvn --quiet -P standalone -Dmaven.repo.local=${OPENSHIFT_DATA_DIR}maven -Djetty.host=$OPENSHIFT_DIY_IP -Djetty.port=$OPENSHIFT_DIY_PORT org.mortbay.jetty:jetty-maven-plugin:start >${OPENSHIFT_DIY_LOG_DIR}/jetty.log 2>&1 &
 echo $! > jetty.pid
