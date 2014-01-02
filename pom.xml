@@ -442,6 +442,19 @@
 					<configuration>
 						<lifecycleMappingMetadata>
 							<pluginExecutions>
+			                    <pluginExecution>
+			                        <pluginExecutionFilter>
+			                            <groupId>org.apache.maven.plugins</groupId>
+			                            <artifactId>maven-dependency-plugin</artifactId>
+			                            <versionRange>[1.0.0,)</versionRange>
+			                            <goals>
+			                                <goal>copy-dependencies</goal>
+			                            </goals>
+			                        </pluginExecutionFilter>
+			                        <action>
+			                            <ignore/>
+			                        </action>
+			                    </pluginExecution>
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>
@@ -490,6 +503,27 @@
 							</configuration>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-dependency-plugin</artifactId>
+				    <version>2.4</version>
+				    <executions>
+				        <execution>
+				            <phase>package</phase>
+				            <goals><goal>copy</goal></goals>
+				            <configuration>
+				                <artifactItems>
+				                    <artifactItem>
+				                        <groupId>org.eclipse.jetty</groupId>
+				                        <artifactId>jetty-runner</artifactId>
+				                        <version>9.1.0.v20131115</version>
+				                        <destFileName>jetty-runner.jar</destFileName>
+				                    </artifactItem>
+				                </artifactItems>
+				            </configuration>
+				        </execution>
+				    </executions>
 				</plugin>
 				<plugin>
 					<groupId>org.mortbay.jetty</groupId>

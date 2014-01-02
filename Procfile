@@ -1,1 +1,1 @@
-web: mvn $JAVA_OPTS -P standalone -DskipTests -DskipITs -Djetty.host=0.0.0.0 -Djetty.port=$PORT jetty:run
+web: java $JAVA_OPTS -jar target/dependency/jetty-runner.jar --port $PORT target/*.war
