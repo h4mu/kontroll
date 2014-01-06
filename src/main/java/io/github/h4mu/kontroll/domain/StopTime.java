@@ -10,7 +10,7 @@ import org.springframework.roo.addon.tostring.RooToString;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(identifierType = Integer.class)
+@RooJpaActiveRecord(identifierType = Integer.class, persistenceUnit = "persistenceUnit", transactionManager = "transactionManager")
 public class StopTime {
 
     /**

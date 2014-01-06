@@ -121,3 +121,24 @@ persistence setup --provider HIBERNATE --database HYPERSONIC_PERSISTENT
 dependency add --groupId org.eclipse.jetty --artifactId jetty-project --version 9.1.0-SNAPSHOT
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-02 23:01:59
 // Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-02 23:08:00
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-02 23:29:25
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 00:08:18
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-04 00:21:12
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 10:25:38
+persistence setup --database POSTGRES --provider HIBERNATE --databaseName kontroll --userName kontroll --password o0j650pp --persistenceUnit checkinPersistenceUnit --transactionManager checkinTransactionManager
+dependency add --groupId org.hsqldb --artifactId hsqldb --version 2.2.9
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 10:55:46
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-04 13:20:49
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 17:06:58
+focus --class ~.domain.Checkin
+field string --fieldName routeShortName --notNull
+field string --fieldName routeColor --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+field string --fieldName routeTextColor --sizeMax 6 --regexp [0-9a-fA-F]{0,6}
+field string --fieldName tripHeadSign --notNull
+field boolean --fieldName isReturnTrip
+field string --fieldName stopName --notNull 
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-04 17:56:23
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 18:01:03
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-04 18:03:06
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log opened at 2014-01-04 18:20:16
+// Spring Roo 1.2.4.RELEASE [rev 75337cf] log closed at 2014-01-04 18:30:31

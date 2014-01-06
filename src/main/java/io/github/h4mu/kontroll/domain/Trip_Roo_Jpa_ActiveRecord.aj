@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Trip_Roo_Jpa_ActiveRecord {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Trip.entityManager;
     
     public static final EntityManager Trip.entityManager() {
@@ -37,13 +37,13 @@ privileged aspect Trip_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM Trip o", Trip.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Trip.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Trip.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
@@ -54,19 +54,19 @@ privileged aspect Trip_Roo_Jpa_ActiveRecord {
         }
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Trip.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Trip.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public Trip Trip.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         Trip merged = this.entityManager.merge(this);

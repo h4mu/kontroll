@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Checkin_Roo_Jpa_ActiveRecord {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "checkinPersistenceUnit")
     transient EntityManager Checkin.entityManager;
     
     public static final EntityManager Checkin.entityManager() {
@@ -37,13 +37,13 @@ privileged aspect Checkin_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM Checkin o", Checkin.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional
+    @Transactional("checkinTransactionManager")
     public void Checkin.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
-    @Transactional
+    @Transactional("checkinTransactionManager")
     public void Checkin.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
@@ -54,19 +54,19 @@ privileged aspect Checkin_Roo_Jpa_ActiveRecord {
         }
     }
     
-    @Transactional
+    @Transactional("checkinTransactionManager")
     public void Checkin.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
-    @Transactional
+    @Transactional("checkinTransactionManager")
     public void Checkin.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
-    @Transactional
+    @Transactional("checkinTransactionManager")
     public Checkin Checkin.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         Checkin merged = this.entityManager.merge(this);

@@ -4,7 +4,6 @@
 package io.github.h4mu.kontroll.domain;
 
 import io.github.h4mu.kontroll.domain.Checkin;
-import io.github.h4mu.kontroll.domain.StopTime;
 import java.util.Calendar;
 
 privileged aspect Checkin_Roo_JavaBean {
@@ -17,12 +16,52 @@ privileged aspect Checkin_Roo_JavaBean {
         this.spottingTime = spottingTime;
     }
     
-    public StopTime Checkin.getStopTime() {
-        return this.stopTime;
+    public String Checkin.getRouteShortName() {
+        return this.routeShortName;
     }
     
-    public void Checkin.setStopTime(StopTime stopTime) {
-        this.stopTime = stopTime;
+    public void Checkin.setRouteShortName(String routeShortName) {
+        this.routeShortName = routeShortName;
+    }
+    
+    public String Checkin.getRouteColor() {
+        return this.routeColor;
+    }
+    
+    public void Checkin.setRouteColor(String routeColor) {
+        this.routeColor = routeColor;
+    }
+    
+    public String Checkin.getRouteTextColor() {
+        return this.routeTextColor;
+    }
+    
+    public void Checkin.setRouteTextColor(String routeTextColor) {
+        this.routeTextColor = routeTextColor;
+    }
+    
+    public String Checkin.getTripHeadSign() {
+        return this.tripHeadSign;
+    }
+    
+    public void Checkin.setTripHeadSign(String tripHeadSign) {
+        this.tripHeadSign = tripHeadSign;
+    }
+    
+    public Boolean Checkin.getIsReturnTrip() {
+        return this.isReturnTrip;
+    }
+    
+    public void Checkin.setIsReturnTrip(Boolean isReturnTrip) {
+        this.isReturnTrip = isReturnTrip;
+    }
+    
+    public String Checkin.getStopName() {
+        return this.stopName;
+    }
+    
+    public void Checkin.setStopName(String stopName) {
+        this.stopName = stopName;
     }
     
 }

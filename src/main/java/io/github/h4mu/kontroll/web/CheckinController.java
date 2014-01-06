@@ -23,7 +23,15 @@ public class CheckinController {
     public String post(@RequestParam Integer id, HttpServletRequest httpServletRequest) {
     	Checkin checkin = new Checkin();
     	checkin.setSpottingTime(Calendar.getInstance());
-    	checkin.setStopTime(StopTime.findStopTime(id));
+    	StopTime stopTime = StopTime.findStopTime(id);
+    	checkin.setStopName(stopTime.getStop().getName());
+    	Trip trip = stopTime.getTrip();
+    	checkin.setTripHeadSign(trip.getHeadSign());
+    	checkin.setIsReturnTrip(trip.getIsReturn());
+    	Route route = trip.getRoute();
+    	checkin.setRouteShortName(route.getShortName());
+    	checkin.setRouteColor(route.getColor());
+    	checkin.setRouteTextColor(route.getTextColor());
     	checkin.persist();
     	return "redirect:checkin/list";
     }

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect Route_Roo_Jpa_ActiveRecord {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager Route.entityManager;
     
     public static final EntityManager Route.entityManager() {
@@ -37,13 +37,13 @@ privileged aspect Route_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM Route o", Route.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Route.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Route.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
@@ -54,19 +54,19 @@ privileged aspect Route_Roo_Jpa_ActiveRecord {
         }
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Route.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void Route.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public Route Route.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         Route merged = this.entityManager.merge(this);

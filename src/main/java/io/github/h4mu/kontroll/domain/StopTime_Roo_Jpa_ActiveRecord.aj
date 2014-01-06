@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 privileged aspect StopTime_Roo_Jpa_ActiveRecord {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "persistenceUnit")
     transient EntityManager StopTime.entityManager;
     
     public static final EntityManager StopTime.entityManager() {
@@ -37,13 +37,13 @@ privileged aspect StopTime_Roo_Jpa_ActiveRecord {
         return entityManager().createQuery("SELECT o FROM StopTime o", StopTime.class).setFirstResult(firstResult).setMaxResults(maxResults).getResultList();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void StopTime.persist() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.persist(this);
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void StopTime.remove() {
         if (this.entityManager == null) this.entityManager = entityManager();
         if (this.entityManager.contains(this)) {
@@ -54,19 +54,19 @@ privileged aspect StopTime_Roo_Jpa_ActiveRecord {
         }
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void StopTime.flush() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.flush();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public void StopTime.clear() {
         if (this.entityManager == null) this.entityManager = entityManager();
         this.entityManager.clear();
     }
     
-    @Transactional
+    @Transactional("transactionManager")
     public StopTime StopTime.merge() {
         if (this.entityManager == null) this.entityManager = entityManager();
         StopTime merged = this.entityManager.merge(this);

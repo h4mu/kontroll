@@ -26,16 +26,15 @@
 		              <fmt:formatDate value="${checkin.spottingTime.time}" pattern="${fn:escapeXml(dateTimePattern)}" type="time" />
 		            </spring:escapeBody>
 		  		</td>
-	  			<c:set var="route" value="${checkin.stopTime.trip.route}" />
 	  			<c:set var="hash" value="#" />
-		  		<td style="color: ${hash}${route.textColor}; background-color: ${hash}${route.color};">
-	  				<c:out value="${route.shortName}" />
+		  		<td style="color: ${hash}${checkin.routeTextColor}; background-color: ${hash}${checkin.routeColor};">
+	  				<c:out value="${checkin.routeShortName}" />
 		  		</td>
 		  		<td>
-	  				<c:out value="${checkin.stopTime.trip.headSign}" />
+	  				<c:out value="${checkin.tripHeadSign}" />
 		  		</td>
 		  		<td>
-	  				<c:out value="${checkin.stopTime.stop.name}" />
+	  				<c:out value="${checkin.stopName}" />
 		  		</td>
 		  	</tr>
 	    </c:forEach>

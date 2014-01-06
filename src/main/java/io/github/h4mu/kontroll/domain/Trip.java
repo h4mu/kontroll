@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @RooJavaBean
 @RooToString
-@RooJpaActiveRecord(identifierType = Integer.class)
+@RooJpaActiveRecord(identifierType = Integer.class, persistenceUnit = "persistenceUnit", transactionManager = "transactionManager")
 public class Trip {
 
     /**
