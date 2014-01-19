@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -99,7 +100,6 @@ public class Loader {
 
 	private void cleanDB() {
 		EntityManager entityManager = StopTime.entityManager();
-		entityManager.createQuery("DELETE FROM Checkin").executeUpdate();
 		entityManager.createQuery("DELETE FROM StopTime").executeUpdate();
 		entityManager.createQuery("DELETE FROM Trip").executeUpdate();
 		entityManager.createQuery("DELETE FROM Route").executeUpdate();
@@ -156,6 +156,12 @@ public class Loader {
 	private void parseStopTimes(BufferedReader reader)
 			throws IOException {
 		HashSet<String> processedStopTimes = new HashSet<>();
+		Calendar wholeDay = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+		wholeDay.setTimeInMillis(0);
+		Date dayBeginning = wholeDay.getTime();
+		wholeDay.add(Calendar.DAY_OF_YEAR, 1);
+		wholeDay.add(Calendar.MILLISECOND, -1);
+		Date dayEnd = wholeDay.getTime();
 		SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
 		String line = reader.readLine(); // skip column names
 		while ((line = reader.readLine()) != null) {
@@ -189,6 +195,14 @@ public class Loader {
 				} catch (ParseException e) {
 					write(line);
 					continue;
+				}
+				if (trip.getStartTime() != null && trip.getEndTime() != null) {
+					Calendar diff = Calendar.getInstance();
+					diff.setTimeInMillis(trip.getEndTime().getTime() - trip.getStartTime().getTime());
+					if (diff.get(Calendar.DAY_OF_YEAR) > 1) {
+						trip.setStartTime(dayBeginning);
+						trip.setEndTime(dayEnd);
+					}
 				}
 				String stopTimeKey = split[3] + ":" + tripId + ":" + stopId;
 				if (!processedStopTimes.contains(stopTimeKey)) {

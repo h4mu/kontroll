@@ -85,7 +85,8 @@
     <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
-    <tx:annotation-driven mode="aspectj" transaction-manager="checkinTransactionManager"/>
+    <tx:annotation-driven mode="aspectj" transaction-manager="transactionManager" order="1"/>
+    <tx:annotation-driven mode="aspectj" transaction-manager="checkinTransactionManager" order="0"/>
     <bean class="org.springframework.orm.jpa.JpaTransactionManager" id="checkinTransactionManager">
         <property name="entityManagerFactory" ref="checkinEntityManagerFactory"/>
     </bean>
